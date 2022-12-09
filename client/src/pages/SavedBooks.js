@@ -1,6 +1,6 @@
 import React from "react";
 import { Jumbotron, Container } from "react-bootstrap";
-import BookList from "../components/BookListSaved";
+import BookList from "../components/SavedList";
 import { getUserId } from "../utils/getUserId"; //get user id from jwt token
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";

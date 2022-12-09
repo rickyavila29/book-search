@@ -4,7 +4,7 @@ import Auth from "../utils/auth";
 
 import { useLocation } from 'react-router-dom';
 
-const BookListSaved = ({ savedBooks, handleDeleteBook, source }) => {
+const SavedList = ({ savedBooks, handleDeleteBook, source }) => {
   const location = useLocation();
   const pathname = useLocation().pathname;
   // console.log({ location }, {pathname});
@@ -82,4 +82,4 @@ const BookListSaved = ({ savedBooks, handleDeleteBook, source }) => {
   );
 };
 
-export default BookListSaved;
+export default SavedList;
