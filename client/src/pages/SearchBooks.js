@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Jumbotron, Container, Form, Button } from "react-bootstrap";
 import BookList from "../components/BookListSearch";
 
-import { getUserId } from "../utils/getUserId"; //get user id from jwt token for db queries/mutations
 
 import { ADD_BOOK } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
-import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
-import { removeDuplicateBooks } from "../utils/removeDuplicateBooks";
+import { searchGoogleBooks } from "../utils/API";
+import Auth from "../utils/auth"
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -27,7 +26,6 @@ const SearchBooks = () => {
 
   //section
   // get userId from jwt token to use in query/mutation
-  let userId = getUserId();
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -48,25 +46,14 @@ const SearchBooks = () => {
 
       // results in "items" can return duplicate book id; function below removes duplicates
       // when duplicate entries exist reeact returns an error message in the console b/c it can't uniquely identify each item
-      let uniqueBooks = removeDuplicateBooks(items);
 
-      const bookData = uniqueBooks.map((book) => ({
+      const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.authors || ["No author to display"],
         title: book.title,
         description: book.description || "No description available.",
         image:
-          book.imageLinks?.thumbnail ||
-          "https://placehold.jp/16/0000FF/ffffff/300x500.png?text=No%20Image%20Available",
-          // book.imageLinks?.thumbnail.replace("http:", "https:") ||
-          // "https://placehold.jp/16/0000FF/ffffff/300x500.png?text=No%20Image%20Available",
-        publishedDate: book.publishedDate || "No publish date",
-        previewLink: 
-          // book.previewLink.replace("http:", "https:") || "No preview link", 
-          book.previewLink || "No preview link",
-        infoLink: 
-          // book.infoLink.replace("http:", "https:") || "No info link",
-          book.infoLink || "No info link",
+          book.imageLinks?.thumbnail || '',
       }));
 
       setSearchedBooks(bookData);
@@ -82,14 +69,16 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
 
     try {
-      await addBook({
-        variables: {
-          id: userId,
-          ...bookToSave,
-        },
-      });
+ const {data} = await addBook ({
+  variables: {bookData:{...bookToSave}}
+ })
 
       // if book saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
