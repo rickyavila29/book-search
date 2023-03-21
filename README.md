@@ -1,31 +1,31 @@
-# MERN: Book - Search Engine
-[![License:  MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# 21 MERN: Book Search Engine
 
-## Index
+To complete the assignment, you’ll need to do the following:
 
-1. [Description](#description)
-2. [Installation](#installation)
-3. [Usage](#usage)
+1. Set up an Apollo Server to use GraphQL queries and mutations to fetch and modify data, replacing the existing RESTful API.
 
-## Description
+2. Modify the existing authentication middleware so that it works in the context of a GraphQL API.
+
+3. Create an Apollo Provider so that requests can communicate with an Apollo Server.
+
+4. Deploy your application to Heroku with a MongoDB database using MongoDB Atlas. Use the [Deploy with Heroku and MongoDB Atlas](https://coding-boot-camp.github.io/full-stack/mongodb/deploy-with-heroku-and-mongodb-atlas) walkthrough for instructions.
+
+
+## User Story
+
+```md
 AS AN avid reader
 I WANT to search for new books to read
 SO THAT I can keep a list of books to purchase
 ```
-This app is a search engine that allows users to find/search and save books that the user would like to read (or purchase or share).
 
-The objective of this project was to convert a RESTful MERN (Mongo, Express, React, Node) API to a GraphQL/Apollo MERN API.
 
-```
+## Acceptance Criteria
 
-## Installation
 
-Setup: 
-- (1) Fork the repo, (2) Clone the forked repo locally, (3) Run `npm i` to install dependancies, and (4) "npm run develop" to build the app, deploy the local server and open the app.
+In order for this application to use a GraphQL API, you’ll need to refactor the API to use GraphQL on the back end and add some functionality to the front end. The following sections contain details about the files you’ll need to modify on the back end and the front end.
 
-## Usage
-
-This app is deployed using Heroku. From a development perspective, this app uses Node.js, Mongo, React and Apollo/GraphQL. See the technology list below for more detail.
+**Important**: Make sure to study the application before building upon it. Better yet, start by making a copy of it. It's already a working application&mdash;you're converting it from RESTful API practices to a GraphQL API.
 
 ### Back-End Specifications
 
@@ -129,4 +129,3 @@ Additionally, you’ll need to complete the following tasks in each of these fro
 * `SignupForm.js`: Replace the `addUser()` functionality imported from the `API` file with the `ADD_USER` mutation functionality.
 
 * `LoginForm.js`: Replace the `loginUser()` functionality imported from the `API` file with the `LOGIN_USER` mutation functionality.
-
