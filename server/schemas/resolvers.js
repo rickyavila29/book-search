@@ -4,19 +4,8 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // users: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return User.find().populate("books");
-    //   }
-    //   throw new AuthenticationError("You need to be logged in!");
-    // },
-    // books: async (parent, { username }) => {
-    //   const params = username ? { username } : {};
-    //   return Book.find(params).sort({ createdAt: -1 });
-    // },
     me: async (parent, args, context) => {
       if (context.user) {
-       // return User.findById({ _id: context.user._id }).populate("books");
        const userData = await User.findOne({_id:context.user._id}).select("-__v -password");
        return userData;
       }
@@ -48,43 +37,7 @@ console.log(correctPw)
 
       return { token, user };
     },
-    // addBook: async (
-    //   parent,
-    //   {
-    //     _id,
-    //     bookId,
-    //     authors,
-    //     description,
-    //     image,
-    //     title,
-    //     infoLink,
-    //     previewLink,
-    //     publishedDate,
-    //   },
-    //   context
-    // ) => {
-    //   if (context.user) {
-    //     return User.findOneAndUpdate(
-    //       { _id },
-    //       {
-    //         $addToSet: {
-    //           savedBooks: {
-    //             bookId: bookId,
-    //             authors,
-    //             description,
-    //             image,
-    //             title,
-    //             infoLink,
-    //             previewLink,
-    //             publishedDate,
-    //           },
-    //         },
-    //       },
-    //       { new: true }
-    //     );
-    //   }
-    //   throw new AuthenticationError("You need to be logged in!");
-    // },
+    
     savedBook: async (parent, {bookData},context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate (
